@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    
+    
+    <!-- Normal Breadcrumb Begin -->
+    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/normal-breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>Our Blog</h2>
+                        <p>Welcome to the official Anime blog.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Normal Breadcrumb End -->
+
+    <section class="blog spad">
+        <div class="container">
+                <div class="col-lg-16">
+                    <div class="row">
+                            {% for blog in blogs %}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="blog__item small__item set-bg" data-setbg="{{blog.images.url}}" style="background-image: url(&quot;{{blog.images.url}}&quot;);">
+                                <div class="blog__item__text">
+                                    <p><span class="icon_calendar"></span> {{blog.date_time}}</p>
+                                    <h4><a href="{{blog.slug}}">{{blog}}</a></h4>
+                                </div>
+                                
+                                
+
+                        </div>
+                        
+                        </div>
+                            {% endfor %}
+
+                </div>
+
+            </div>
+
+                        
+        </div>
+        
+        
+
+        
+    </section>
+    
+                        
+                        
+                        
+    <!-- Blog Section End -->
+
+    {% endblock body %}

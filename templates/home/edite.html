@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    
+<div class="container">
+    <div class="anime__details__content">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+               
+             
+                 
+          
+            <h2 style="color: #ffffff;margin-top: 100px;padding-left: 100px;">"{{The_coment}}"</h2>
+
+                        
+
+                </div>
+                <div class="anime__details__form">
+                    <div class="section-title">
+                    </div>
+
+                    {% if The_coment %}
+                        
+                    <form method="POST"> 
+                        {% csrf_token %}
+                        <textarea name="commentsec" placeholder="{{The_coment}}"></textarea>
+                        <button type="submit"><i class="fa fa-location-arrow"></i> Edite</button>
+                    </form>
+                </div>
+                                              
+
+            </div>
+        </div>
+        {% endif %}
+        
+
+        {% endblock body %}
+
