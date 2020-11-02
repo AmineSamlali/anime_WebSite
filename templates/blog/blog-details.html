@@ -53,19 +53,6 @@
                             </div>
                             <div class="blog__details__comment">
                                 <h4>3 Comments</h4>
-                                <div class="blog__details__comment__item">
-                                    <div class="blog__details__comment__item__pic">
-                                        <img src="{% static 'img/blog/details/comment-1.png' %}" alt="">
-                                    </div>
-                                    <div class="blog__details__comment__item__text">
-                                        <span>Sep 08, 2020</span>
-                                        <h5>John Smith</h5>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                        adipisci velit, sed quia non numquam eius modi</p>
-                                        <a href="#">Like</a>
-                                        <a href="#">Reply</a>
-                                    </div>
-                                </div>
                                 
 
 
@@ -89,8 +76,36 @@
                                         <h5>{{Comment.comment_auther}}</h5>
                                         <p>{{Comment}}</p>
                                         
-
                                             
+
+
+
+
+                                            {% if Comment.comment_auther == user_auth %}
+
+                                            {% else %}
+                                            {% if user.is_authenticated %}
+
+                                            <a href="{% url 'like' Comment.pk %}">Like</a>
+                                            {% endif %}
+
+
+                                            {% endif %}
+
+
+
+                                                
+
+
+
+                                        {% if Comment.comment_like == 0 %}
+                                        {% else %}
+                                        <small style="color: #ffffff;">{{Comment.comment_like}} likes</small>
+
+                                    {% endif %}
+                                        
+
+
                                                 
                                         {% if replays %}
 
@@ -108,17 +123,21 @@
 
 
 
-
-                                                                    {% if replay.comment_like == 0 %}
+                                                                
+                                                                    
+                                                                    
+                                                                    {% if replay.comment_likes == 0 %}
                                                                     {% else %}
                                                                     <small style="color: #ffffff;">{{replay.comment_likes}} Likes</small>
                         
                                                                 {% endif %}
-                                
+                                                                {% if user.is_authenticated %}
+
                                                                     {% if replay.auther == user_auth %}
                                                                         {% else %}
                                                                         <a href="{% url 'likes' replay.pk %}">Like</a>
                                                                         
+                                                                        {% endif %}
 
                         
                                                                     {% endif %}
@@ -142,18 +161,6 @@
 
 
                                         
-                                        {% if Comment.comment_like == 0 %}
-                                            {% else %}
-                                            <small style="color: #ffffff;">{{Comment.comment_like}} likes</small>
-
-                                        {% endif %}
-                                            
-                                            {% if Comment.comment_auther == user_auth %}
-                                                {% else %}
-                                                <a href="{% url 'like' Comment.pk %}">Like</a>
-
-                                            {% endif %}
-    
 
                         
                         {% if user.is_authenticated %}
@@ -225,4 +232,11 @@
 
 
 
-                      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% endblock body %}
