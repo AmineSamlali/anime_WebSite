@@ -10,6 +10,7 @@ def Home(request):
     return render(request,'blog/blog.html',context)
     
 def Self_Blog(request , slug):
+    f = Comment.objects.all().count()
     fixing = Comment.objects.all()
     replays = ReplayToComment.objects.all()
     self_blog = get_object_or_404(DB_Bloger ,slug=slug)
@@ -34,6 +35,7 @@ def Self_Blog(request , slug):
     context ={
         'blog':self_blog,
         'Comments':Comments,
+        'COMMENT_COUNT':f,
         'replays':replays,
         'user_auth' :user_auth,
         'Keywords':KeyWord_splitting,

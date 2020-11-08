@@ -52,7 +52,16 @@
                                 </div>
                             </div>
                             <div class="blog__details__comment">
-                                <h4>3 Comments</h4>
+                                
+                                {% if COMMENT_COUNT == 0 %}
+                                <h4>No Comments right New</h4>
+
+                                {% elif COMMENT_COUNT == 1 %}
+                                <h4>{{COMMENT_COUNT}}  Comment</h4>
+                                    {% else %}
+                                    <h4>{{COMMENT_COUNT}}  Comments</h4>
+                                {% endif %}
+                                    
                                 
 
 
@@ -73,7 +82,12 @@
                                     </div>
                                     <div class="blog__details__comment__item__text">
                                         <span>{{Comment.comment_datetime}}</span>
-                                        <h5>{{Comment.comment_auther}}</h5>
+                                        <h5>{{Comment.comment_auther}}                                          {% if Comment.comment_like == 0 %}
+                                            {% else %}
+                                            | <small style="color: #ffffff;">{{Comment.comment_like}} likes</small>
+    
+                                        {% endif %}
+    </h5>
                                         <p>{{Comment}}</p>
                                         
                                             
@@ -98,11 +112,6 @@
 
 
 
-                                        {% if Comment.comment_like == 0 %}
-                                        {% else %}
-                                        <small style="color: #ffffff;">{{Comment.comment_like}} likes</small>
-
-                                    {% endif %}
                                         
 
 
@@ -136,7 +145,7 @@
                                                                     {% if replay.auther == user_auth %}
                                                                         {% else %}
                                                                         <a href="{% url 'likes' replay.pk %}">Like</a>
-                                                                        
+
                                                                         {% endif %}
 
                         

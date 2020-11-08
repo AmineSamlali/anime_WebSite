@@ -69,10 +69,12 @@
                         <a href="#" class="search-switch"><span class="icon_search"></span></a>
                         
                         {% if user.is_authenticated %}
-                                <a href="{% url 'login' %}"><span class="icon_profile"></span></a>
+                                <a href="{% url 'logout' %}"><span>Logout</span></a>
+                                <a href="{% url 'profile' %}"><span>Profile</span></a>
+
                         {% else %}
-                                <a href="{% url 'login' %}"><span class="icon_profile"></span></a>
-                                <a href="{% url 'register' %}"><span class="icon_profile"></span></a>
+                                <a href="{% url 'login' %}"><span >login</span></a>
+                                <a href="{% url 'register' %}"><span >Create account </span></a>
                         {% endif %}
                             
                     </div>

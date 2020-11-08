@@ -5,10 +5,16 @@ import random
 import string
 from  django.contrib.auth.models import User
 from datetime import datetime
-
-
-
-
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
+from profiles.models import Profile
+def compress(image):
+    im = Image.open(image)
+    im_io = BytesIO()
+    im.save(im_io, 'PNG', quality=50) 
+    new_image = File(im_io, name=image.name)
+    return new_image
 
 class blog(models.Model):
     '''
@@ -36,7 +42,9 @@ class blog(models.Model):
             empty_list = []
             empty_list.append(i)
             self.slug = slugify(self.ANM_title) + '-'+ empty_list[0][e]
-            return super(blog ,self).save(*args, **kwargs)
+            new_compress_image = compress(self.ANM_image)
+            self.ANM_image =new_compress_image
+            super(blog ,self).save(*args, **kwargs)
     def __str__(self):
         return self.ANM_title
     
@@ -54,9 +62,11 @@ class ANM_Category(models.Model):
 
 
 class comment_self_anime(models.Model):
+    # PRF_profile_image = models.OneToOneField(Profile,on_delete=models.CASCADE)
+    PRF_profile_image = models.ImageField()
     auther = models.ForeignKey(User,on_delete=models.CASCADE , blank=True, null=True)
     self_animee = models.ForeignKey('blog', on_delete=models.CASCADE)
-    datetima = models.TimeField(auto_now=True)
+    datetima = models.DateTimeField(auto_now=True)
     Comment = models.TextField(max_length = 450)
     def __str__(self):
         return self.Comment

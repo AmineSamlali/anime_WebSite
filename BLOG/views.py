@@ -5,7 +5,7 @@ from django.contrib import messages
 from datetime import datetime
 from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
-
+from profiles.models import Profile
 import string
 def Home(request):
     blogs  = blog.objects.all()
@@ -19,7 +19,7 @@ def Home(request):
     return render(request , 'home\index.html',context)
 
 def details(request , slug):
-
+    profille = Profile.objects.get(user=request.user)
     self_anime = get_object_or_404(blog , slug=slug)
     self_anime_2 = blog.objects.get(slug=slug)
     categorys = ANM_Category.objects.all()
@@ -32,10 +32,11 @@ def details(request , slug):
         if len(amine) == 0:
             messages.error(request , "sorry you can't send empty data")
         else:
-            Comment  = comment_self_anime.objects.create(auther=request.user,Comment=amine ,self_animee=self_anime_2,datetima = datetime.now().hour)
+            Comment  = comment_self_anime.objects.create(PRF_profile_image=profille.PRF_profile_image , auther=request.user,Comment=amine ,self_animee=self_anime_2,datetima = datetime.now().hour)
             Comment.save()
     
     comments = comment_self_anime.objects.filter(self_animee=self_anime_2).order_by('-datetima')
+    
     comment_count = comments.count()
     
 
