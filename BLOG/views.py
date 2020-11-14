@@ -19,28 +19,27 @@ def Home(request):
     return render(request , 'home\index.html',context)
 
 def details(request , slug):
-    profille = Profile.objects.get(user=request.user)
-    self_anime = get_object_or_404(blog , slug=slug)
-    self_anime_2 = blog.objects.get(slug=slug)
-    categorys = ANM_Category.objects.all()
-    forming = CommentForm
-    auto = request.user
-    print(auto)
+    if request.user.is_authenticated:
+        profille = Profile.objects.get(user=request.user)
+        self_anime = get_object_or_404(blog , slug=slug)
+        self_anime_2 = blog.objects.get(slug=slug)
+        categorys = ANM_Category.objects.all()
+        forming = CommentForm
+        auto = request.user
+        print(auto)
 
-    if request.method == "POST":
-        amine   = request.POST['commentsec']
-        if len(amine) == 0:
-            messages.error(request , "sorry you can't send empty data")
-        else:
-            Comment  = comment_self_anime.objects.create(PRF_profile_image=profille.PRF_profile_image , auther=request.user,Comment=amine ,self_animee=self_anime_2,datetima = datetime.now().hour)
-            Comment.save()
-    
-    comments = comment_self_anime.objects.filter(self_animee=self_anime_2).order_by('-datetima')
-    
-    comment_count = comments.count()
-    
-
-    context ={
+        if request.method == "POST":
+            amine   = request.POST['commentsec']
+            if len(amine) == 0:
+                messages.error(request , "sorry you can't send empty data")
+            else:
+                Comment  = comment_self_anime.objects.create(PRF_profile_image=profille.PRF_profile_image , auther=request.user,Comment=amine ,self_animee=self_anime_2,datetima = datetime.now().hour)
+                Comment.save()
+        
+        comments = comment_self_anime.objects.filter(self_animee=self_anime_2).order_by('-datetima')
+        
+        comment_count = comments.count()
+        context ={
         'comment_count':comment_count,
         'anime': self_anime,
         'categorys':categorys,
@@ -49,9 +48,23 @@ def details(request , slug):
         'comments':comments,
         'date_time':datetime.now().hour
     }
+
+    else:
+        categorys = ANM_Category.objects.all()
+        self_anime = get_object_or_404(blog , slug=slug)
+        self_anime_2 = blog.objects.get(slug=slug)
+        comments = comment_self_anime.objects.filter(self_animee=self_anime_2).order_by('-datetima')
+        forming = CommentForm
+        comment_count = comments.count()
+        context ={
+        'comment_count':comment_count,
+        'anime': self_anime,
+        'categorys':categorys,
+        'forming':forming,
+        'comments':comments,
+        'date_time':datetime.now().hour
+    }
     return render(request , 'home/anime-details.html',context)
-
-
 def get_category(request , id):
     blogs = blog.objects.filter(ANM_Category_id=id)
     categorys = ANM_Category.objects.all()
@@ -88,7 +101,6 @@ def deleting(request , id):
         return redirect(f'/{the_ccont.self_animee.slug}')
     return redirect(f'/{the_ccont.self_animee.slug}')
     return render(request , 'home/anime-details.html')
-
 
 
 

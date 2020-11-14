@@ -82,7 +82,8 @@
                                     </div>
                                     <div class="blog__details__comment__item__text">
                                         <span>{{Comment.comment_datetime}}</span>
-                                        <h5>{{Comment.comment_auther}}                                          {% if Comment.comment_like == 0 %}
+                                        <h5>{{Comment.comment_auther}}          
+                                        {% if Comment.comment_like == 0 %}
                                             {% else %}
                                             | <small style="color: #ffffff;">{{Comment.comment_like}} likes</small>
     

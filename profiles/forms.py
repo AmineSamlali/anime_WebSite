@@ -1,6 +1,8 @@
 from django import forms
 from .models import Profile
 from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Your Name','type':"text",'class':'form-control'}))
@@ -18,3 +20,12 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['PRF_phone','PRF_Location','PRF_profile_image']
         
+
+class PasswordChangeForm_F(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'old Password ','type':"password",'class':'form-control',}))
+    new_password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'New Password ','type':"password",'class':'form-control'}))
+    new_password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Replay New Password','type':"password",'class':'form-control'}))
+
+    class Meta:
+        model = PasswordChangeForm
+        fields = '__all__'
